@@ -25,11 +25,13 @@ class NoteController extends Controller
      */
     public function index()
     {
-        $number = mt_rand(0, 100);
+        $notes = $this->getDoctrine()
+            ->getRepository(Note::class)
+            ->findAll();
 
-        return new Response(
-            '<html><body>Lucky number: '.$number.'</body></html>'
-        );
+        return $this->render('note/index.html.twig', array(
+            'notes' => $notes,
+        ));
     }
 
     /**
