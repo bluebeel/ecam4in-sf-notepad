@@ -29,13 +29,8 @@ class NoteController extends Controller
             ->getRepository(Note::class)
             ->findAll();
 
-        $categories = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findAll();
-
         return $this->render('note/index.html.twig', array(
             'notes' => $notes,
-            'categories' => $categories
         ));
     }
 

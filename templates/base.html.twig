@@ -18,7 +18,7 @@
     <div class="container">
 
         <div class="row">
-            {{ include('sidebar.html.twig', { 'categories': categories }) }}
+            {{ render(controller('App\\Controller\\BaseController::getCategories')) }}
             <!-- /.col-lg-3 -->
 
             <div class="col-lg-9">
