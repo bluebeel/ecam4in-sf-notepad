@@ -1,5 +1,15 @@
 
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
 // the ~ allows you to reference things in node_modules
-@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import "~bootstrap/scss/bootstrap";

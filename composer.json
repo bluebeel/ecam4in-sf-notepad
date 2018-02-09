@@ -23,8 +23,9 @@
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
         "symfony/web-link": "^4.0",
-        "symfony/webpack-encore-pack": "*",
-        "symfony/yaml": "^4.0"
+        "symfony/webpack-encore-pack": "^1.0",
+        "symfony/yaml": "^4.0",
+        "twbs/bootstrap": "4.0.0"
     },
     "require-dev": {
         "symfony/browser-kit": "^4.0",
