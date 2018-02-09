@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class NoteController extends Controller
 {
     /**
-     * @Route("/notes", name="notes")
+     * @Route("/", name="notes")
      */
     public function index()
     {
@@ -29,8 +29,13 @@ class NoteController extends Controller
             ->getRepository(Note::class)
             ->findAll();
 
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
+
         return $this->render('note/index.html.twig', array(
             'notes' => $notes,
+            'categories' => $categories
         ));
     }
 
