@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>New note</title>
-</head>
-<body>
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
-</body>
-</html>
+{% extends 'base.html.twig' %}
+
+{% block title %}New note{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

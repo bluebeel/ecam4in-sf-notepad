@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Note</title>
-</head>
-<body>
-{% for item in notes %}
-    <div>
-        <h1>{{ item.getTitle() }}</h1>
-        <p>Content: {{ item.getContent() }}</p>
-        <p>Date: {{ item.getDate()|date('Y-m-d') }}</p>
-    </div>
-{% endfor %}
-</body>
-</html>
+{% extends 'base.html.twig' %}
+{% block title %}Notes{% endblock %}
+
+{% block body %}
+    {% for item in notes %}
+        <div>
+            <h1>{{ item.getTitle() }}</h1>
+            <p>Content: {{ item.getContent() }}</p>
+            <p>Date: {{ item.getDate()|date('Y-m-d') }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
