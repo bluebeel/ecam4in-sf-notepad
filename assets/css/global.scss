@@ -11,5 +11,9 @@ body {
   }
 }
 
+.category-form {
+  margin-top: 40px;
+}
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
