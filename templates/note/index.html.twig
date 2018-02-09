@@ -2,17 +2,20 @@
 {% block title %}Notes{% endblock %}
 
 {% block body %}
+    {% for item in notes %}
     <div class="card card-outline-secondary my-4">
-        {% for item in notes %}
         <div class="card-header">
             {{ item.getTitle() }}
         </div>
         <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">{{ item.getCategory().getLibelle() }}</h6>
             <p>{{ item.getContent() }}</p>
             <small class="text-muted">Posted on {{ item.getDate()|date('Y-m-d') }}</small>
             <hr>
-            <a href="#" class="btn btn-success">Leave a Review</a>
+            <a href="{{ path('edit_note', {'id': item.getId() }) }}" class="btn btn-primary">Edit note</a>
+            <a href="{{ path('delete_note', {'id': item.getId() }) }}" class="btn btn-danger">Delete note</a>
         </div>
-        {% endfor %}
     </div>
+        {% endfor %}
+    <br/>
 {% endblock %}

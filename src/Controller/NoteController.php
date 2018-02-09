@@ -35,8 +35,64 @@ class NoteController extends Controller
     }
 
     /**
+     * @Route("/notes/delete/{id}", name="delete_note")
+     * @param $note
+     * @return mixed
+     */
+    public function deleteNote(Note $note)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($note);
+        $em->flush();
+        return $this->redirectToRoute('notes');
+    }
+
+    /**
+     * @Route("/notes/edit/{id}", name="edit_note")
+     * @param $request
+     * @param $note
+     * @return mixed
+     */
+    public function editNote(Request $request, Note $note)
+    {
+        $form = $this->createFormBuilder($note)
+            ->add('title', TextType::class)
+            ->add('date', DateType::class)
+            ->add('content', TextType::class)
+            ->add('category', EntityType::class, array(
+                'class' => Category::class,
+                'choice_label' => 'libelle'
+            ))
+            ->add('save', SubmitType::class, array('label' => 'Edit Note'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $note = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($note);
+            $em->flush();
+
+            return $this->redirectToRoute('notes');
+        }
+
+        return $this->render('note/newNote.html.twig', array(
+            'form' => $form->createView(),
+        ));
+
+    }
+
+
+
+    /**
      * @Route("/notes/new", name="new_notes")
-     * @param mixed $request
+     * @param $request
      * @return mixed
      */
     public function newNote(Request $request)
