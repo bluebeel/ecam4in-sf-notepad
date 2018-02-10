@@ -15,5 +15,13 @@ body {
   margin-top: 40px;
 }
 
+.note-header {
+  margin-top: 25px;
+}
+
+.note-btn {
+  margin-top: 10px;
+}
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";
