@@ -3,7 +3,7 @@
     <a href="{{ path('new_category') }}" class="btn btn-primary btn-block" role="button" aria-pressed="true">Add category</a>
     <br/>
     <div class="list-group">
-        <a href="{{ path('notes') }}" class="list-group-item active">All</a>
+        <a href="{{ path('notes') }}" class="list-group-item">All</a>
         {% for item in categories %}
             <a href="{{ path('category_show', {'id': item.getId() }) }}" class="list-group-item">{{ item.getLibelle() }}</a>
         {% endfor %}
