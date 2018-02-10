@@ -25,7 +25,7 @@ class Category
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="category", cascade={"remove"})
      */
     private $notes;
 

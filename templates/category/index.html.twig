@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+    <h1>Category list</h1>
+    <table class="table category-table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Libelle</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in categories %}
+            <tr>
+                <th scope="row">{{ item.getId() }}</th>
+                <td>{{ item.getLibelle() }}</td>
+                <td><a href="">Edit</a></td>
+                <td><a href="{{ path('category_delete', {'id': item.getId() }) }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br/>
+{% endblock %}

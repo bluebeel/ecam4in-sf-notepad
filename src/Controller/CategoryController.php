@@ -18,9 +18,23 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class CategoryController extends Controller
 {
     /**
+     * @Route("/categories", name="categories")
+     */
+    public function index()
+    {
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
+
+        return $this->render('category/index.html.twig', array(
+            'categories' => $categories,
+        ));
+    }
+
+    /**
      * @Route("/categories/new", name="new_category")
-     * @param mixed $request
-     * @return mixed
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newCategory(Request $request)
     {
@@ -41,7 +55,7 @@ class CategoryController extends Controller
             $em->persist($category);
             $em->flush();
 
-            return $this->redirectToRoute('notes');
+            return $this->redirectToRoute('categories');
         }
 
         return $this->render('category/newCategory.html.twig', array(
@@ -51,16 +65,29 @@ class CategoryController extends Controller
 
     /**
      * @Route("/categories/{id}", name="category_show")
-     * @param mixed $category
-     * @return mixed
+     * @param Category $category
+     * @return Response
      */
-    public function show(Category $category)
+    public function showNotesFromCategory(Category $category)
     {
         $notes = $category->getNotes();
 
         return $this->render('note/index.html.twig', array(
             'notes' => $notes,
         ));
+    }
+
+    /**
+     * @Route("/categories/delete/{id}", name="category_delete")
+     * @param Category $category
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function delete(Category $category)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($category);
+        $em->flush();
+        return $this->redirectToRoute('categories');
     }
 }
 ?>
