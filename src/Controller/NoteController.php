@@ -36,8 +36,8 @@ class NoteController extends Controller
 
     /**
      * @Route("/notes/delete/{id}", name="delete_note")
-     * @param $note
-     * @return mixed
+     * @param Note $note
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteNote(Note $note)
     {
@@ -49,9 +49,9 @@ class NoteController extends Controller
 
     /**
      * @Route("/notes/edit/{id}", name="edit_note")
-     * @param $request
-     * @param $note
-     * @return mixed
+     * @param Request $request
+     * @param Note $note
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function editNote(Request $request, Note $note)
     {
@@ -70,11 +70,8 @@ class NoteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
             $note = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
             $em = $this->getDoctrine()->getManager();
             $em->persist($note);
             $em->flush();
@@ -89,15 +86,13 @@ class NoteController extends Controller
     }
 
 
-
     /**
      * @Route("/notes/new", name="new_notes")
-     * @param $request
-     * @return mixed
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function newNote(Request $request)
     {
-        // creates a task and gives it some dummy data for this example
         $note = new Note();
         $note->setTitle('Write a title');
         $note->setDate(new \DateTime('today'));
@@ -117,11 +112,8 @@ class NoteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
             $note = $form->getData();
 
-            // ... perform some action, such as saving the task to the database
-            // for example, if Task is a Doctrine entity, save it!
             $em = $this->getDoctrine()->getManager();
             $em->persist($note);
             $em->flush();

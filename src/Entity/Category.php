@@ -29,6 +29,9 @@ class Category
      */
     private $notes;
 
+    /**
+     * Category constructor.
+     */
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -51,7 +54,7 @@ class Category
     }
 
     /**
-     * @param mixed $libelle
+     * @param $libelle
      */
     public function setLibelle($libelle)
     {

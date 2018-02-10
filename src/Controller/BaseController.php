@@ -12,6 +12,9 @@ use App\Entity\Category;
 
 class BaseController extends Controller
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getCategories()
     {
         $categories = $this->getDoctrine()

@@ -61,7 +61,7 @@ class Note
     }
 
     /**
-     * @param mixed $title
+     * @param $title
      */
     public function setTitle($title)
     {
@@ -77,7 +77,7 @@ class Note
     }
 
     /**
-     * @param mixed $content
+     * @param $content
      */
     public function setContent($content)
     {
@@ -93,7 +93,7 @@ class Note
     }
 
     /**
-     * @param mixed $date
+     * @param $date
      */
     public function setDate($date)
     {
@@ -109,7 +109,7 @@ class Note
     }
 
     /**
-     * @param mixed $category
+     * @param \App\Entity\Category $category
      */
     public function setCategory(Category $category)
     {
