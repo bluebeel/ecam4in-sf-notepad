@@ -64,6 +64,37 @@ class CategoryController extends Controller
     }
 
     /**
+     * @Route("/categories/edit/{id}", name="category_edit")
+     * @param Request $request
+     * @param Category $category
+     * @return mixed
+     */
+    public function editCategory(Request $request, Category $category)
+    {
+        $form = $this->createFormBuilder($category)
+            ->add('libelle', TextType::class)
+            ->add('save', SubmitType::class, array('label' => 'Edit Category'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            $category = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+
+            return $this->redirectToRoute('categories');
+        }
+
+        return $this->render('category/newCategory.html.twig', array(
+            'form' => $form->createView(),
+        ));
+
+    }
+
+    /**
      * @Route("/categories/{id}", name="category_show")
      * @param Category $category
      * @return Response

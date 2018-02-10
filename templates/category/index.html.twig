@@ -17,7 +17,7 @@
             <tr>
                 <th scope="row">{{ item.getId() }}</th>
                 <td>{{ item.getLibelle() }}</td>
-                <td><a href="">Edit</a></td>
+                <td><a href="{{ path('category_edit', {'id': item.getId() }) }}">Edit</a></td>
                 <td><a href="{{ path('category_delete', {'id': item.getId() }) }}">Delete</a></td>
             </tr>
         {% endfor %}
