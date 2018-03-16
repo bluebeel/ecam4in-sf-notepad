@@ -16,10 +16,11 @@ use App\Entity\Category;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+
 class NoteApiController extends Controller
 {
     /**
-     * @Route("/api/note", name="api_notes_index")
+     * @Route("/api/note", name="api_note_index")
      * @Method({"GET"})
      */
     public function index()
@@ -37,42 +38,96 @@ class NoteApiController extends Controller
     }
 
     /**
-     * @Route("/api/note/{id}", name="api_notes_get_delete")
-     * @Method({"GET", "DELETE"})
+     * @Route("/api/note", name="api_note_create")
+     * @Method({"POST"})
      * @param Request $request
-     * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function getNote(Request $request, $id)
+    public function newNote(Request $request)
+    {
+        $noteManager = $this->getDoctrine()
+            ->getManager();
+
+        $content = $request->getContent();
+        if (empty($content))
+        {
+            return new JsonResponse(
+                array(
+                    'status' => 'EMPTY',
+                    'message' => 'The body of this request is empty.'
+                )
+            );
+        }
+        $note = $this->get('jms_serializer')->deserialize($content, Note::class, 'json');
+        $noteManager->persist($note);
+        $noteManager->flush();
+        $response = new JsonResponse(
+            array(
+                'status' => 'CREATED',
+                'message' => 'The note has been created.'
+            )
+        );
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setStatusCode(Response::HTTP_CREATED);
+
+        return $response;
+    }
+
+    /**
+ * @Route("/api/note/{id}", name="api_note_delete")
+ * @Method({"DELETE"})
+ * @param $id
+ * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+ */
+    public function deleteNote($id)
     {
         $note = $this->getDoctrine()
             ->getRepository(Note::class)
             ->find($id);
         if ($note) {
-            if ($request->isMethod('GET')) {
-                $data = $this->get('jms_serializer')->serialize($note, 'json');
-
-                $response = new Response($data);
-                $response->headers->set('Content-Type', 'application/json');
-
-                return $response;
-            }
-            if ($request->isMethod('DELETE')) {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($note);
-                $em->flush();
-                return new JsonResponse(
-                    array(
-                        'status' => 'noteDeleted',
-                        'message' => 'This note has been deleted'
-                    )
-                );
-            }
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($note);
+            $em->flush();
+            return new JsonResponse(
+                array(
+                    'status' => 'DELETED',
+                    'message' => 'This note has been deleted'
+                )
+            );
         }
         else {
             return new JsonResponse(
                 array(
-                    'status' => 'noteNotFound',
+                    'status' => 'NOT FOUND',
+                    'message' => 'This note does not exist'
+                )
+            );
+        }
+    }
+
+    /**
+     * @Route("/api/note/{id}", name="api_note_get")
+     * @Method({"GET"})
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function getNote($id)
+    {
+        $note = $this->getDoctrine()
+            ->getRepository(Note::class)
+            ->find($id);
+        if ($note) {
+            $data = $this->get('jms_serializer')->serialize($note, 'json');
+            $response = new Response($data);
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_FOUND);
+
+            return $response;
+        }
+        else {
+            return new JsonResponse(
+                array(
+                    'status' => 'NOT FOUND',
                     'message' => 'This note does not exist'
                 )
             );
@@ -81,23 +136,54 @@ class NoteApiController extends Controller
 
 
     /**
-     * @Route("/notes/edit/{id}", name="edit_note")
+     * @Route("/api/note/{id}", name="api_note_edit")
+     * @Method({"PUT", "PATCH"})
      * @param Request $request
-     * @param Note $note
+     * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editNote(Request $request, Note $note)
+    public function editNote(Request $request, $id)
     {
+        $noteManager = $this->getDoctrine()
+            ->getManager();
+        $content = $request->getContent();
+        if (empty($content))
+        {
+            return new JsonResponse(
+                array(
+                    'status' => 'EMPTY',
+                    'message' => 'The body of this request is empty.'
+                )
+            );
+        }
+        $note = $noteManager
+            ->getRepository(Note::class)
+            ->find($id);
+        if ($note) {
+            $note_request = $this->get('jms_serializer')->deserialize($content, Note::class, 'json');
+            $note->setTitle($note_request->getTitle());
+            $note->setContent($note_request->getContent());
+            $note->setDate($note_request->getDate());
+            $note->setCategory($note_request->getCategory());
+            $noteManager->flush();
+            $response = new Response(
+                array(
+                    'status' => 'UPDATED',
+                    'message' => 'The note has been updated.'
+                )
+            );
+            $response->headers->set('Content-Type', 'application/json');
+            $response->setStatusCode(Response::HTTP_OK);
 
-    }
-
-
-    /**
-     * @Route("/notes/new", name="new_notes")
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function newNote(Request $request)
-    {
+            return $response;
+        }
+        else {
+            return new JsonResponse(
+                array(
+                    'status' => 'NOT FOUND',
+                    'message' => 'This note does not exist'
+                )
+            );
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use App\Entity\Note;
 
 /**
@@ -25,7 +26,7 @@ class Category
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="category", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="category", cascade={"ALL"})
      */
     private $notes;
 

@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180223094637 extends AbstractMigration
+class Version20180316081426 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -18,7 +18,7 @@ class Version20180223094637 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE category_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE note_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE TABLE category (id INT NOT NULL, libelle VARCHAR(50) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE TABLE note (id INT NOT NULL, category_id INT DEFAULT NULL, title VARCHAR(50) NOT NULL, content TEXT NOT NULL, date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE note (id INT NOT NULL, category_id INT NOT NULL, title VARCHAR(50) NOT NULL, content TEXT NOT NULL, date TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_CFBDFA1412469DE2 ON note (category_id)');
         $this->addSql('ALTER TABLE note ADD CONSTRAINT FK_CFBDFA1412469DE2 FOREIGN KEY (category_id) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }

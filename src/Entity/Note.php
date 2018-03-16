@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Category;
-
+use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -22,12 +22,14 @@ class Note
     /**
      * @ORM\Column(type="string", length=50)
      * @Assert\NotBlank()
+     * @Serializer\Type("string")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
+     * @Serializer\Type("string")
      */
     private $content;
 
@@ -40,7 +42,9 @@ class Note
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="notes")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
+     * @Serializer\SerializedName("category")
+     * @Serializer\Type("Entity<App\Entity\Category>")
      */
     private $category;
 
