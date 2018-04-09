@@ -20,14 +20,35 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class NoteController extends Controller
 {
+    function getTags(array $notes, $tag)
+    {
+        $filtered = array_filter($notes, function ($u) use ($tag) {
+            $xml = new \DOMDocument();
+            $xml->loadXML($u->getContent(), LIBXML_NOBLANKS); // Or load if filename required
+            $xpath = new \DOMXpath($xml);
+            $elements = $xpath->query("/content/tag");
+            $elements = array_map(function ($x) { return $x->nodeValue; }, iterator_to_array($elements));
+            if (!is_null($elements)) {
+                if (in_array($tag, $elements)) {
+                    return $u;
+                }
+            }
+        });
+        return $filtered;
+    }
+
     /**
      * @Route("/", name="notes")
      */
-    public function index()
+    public function index(Request $request)
     {
         $notes = $this->getDoctrine()
             ->getRepository(Note::class)
             ->findAll();
+        $q = $request->query->get("q");
+        if ($q) {
+            $notes = $this->getTags($notes, $q);
+        }
 
         return $this->render('note/index.html.twig', array(
             'notes' => $notes,

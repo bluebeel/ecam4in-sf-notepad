@@ -17,6 +17,10 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
+    public function findNoteByTag($value) {
+
+    }
+
     /*
     public function findBySomething($value)
     {
