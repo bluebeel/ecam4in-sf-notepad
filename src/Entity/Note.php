@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Category;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use App\Validator\Constraints as AcmeAssert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
  */
@@ -29,6 +29,7 @@ class Note
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
+     * @AcmeAssert\XsdValid
      * @Serializer\Type("string")
      */
     private $content;
@@ -85,7 +86,7 @@ class Note
      */
     public function setContent($content)
     {
-        $this->content = $content;
+        $this->content = "<content>" . $content . "</content>";
     }
 
     /**

@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted">{{ item.getCategory().getLibelle() }}</h6>
-            <p>{{ item.getContent() }}</p>
+            <p>{{ item.getContent()|striptags }}</p>
             <small class="text-muted">Posted on {{ item.getDate()|date('Y-m-d') }}</small>
             <hr>
             <a href="{{ path('edit_note', {'id': item.getId() }) }}" class="btn btn-primary">Edit note</a>
