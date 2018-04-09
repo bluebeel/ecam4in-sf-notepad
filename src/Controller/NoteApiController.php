@@ -19,15 +19,39 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class NoteApiController extends Controller
 {
+    function getTags(array $notes, $tag)
+    {
+        $filtered = array_filter($notes, function ($u) use ($tag) {
+            $xml = new \DOMDocument();
+            print_r($u->getContent());
+            $xml->loadXML($u->getContent()); // Or load if filename required
+            $xpath = new \DOMXpath($xml);
+            $elements = $xpath->query("/content/tag");
+            $elements = array_map(function ($x) { return $x->nodeValue; }, iterator_to_array($elements));
+            if (!is_null($elements)) {
+                if (in_array($tag, $elements)) {
+                    return $u;
+                }
+            }
+        });
+        return $filtered;
+    }
+
     /**
      * @Route("/api/note", name="api_note_index")
      * @Method({"GET"})
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $notes = $this->getDoctrine()
             ->getRepository(Note::class)
             ->findAll();
+        $q = $request->query->get("q");
+        if ($q) {
+            $notes = $this->getTags($notes, $q);
+        }
 
         $data = $this->get('jms_serializer')->serialize($notes, 'json');
 
@@ -59,6 +83,7 @@ class NoteApiController extends Controller
             );
         }
         $note = $this->get('jms_serializer')->deserialize($content, Note::class, 'json');
+        $note->setContent($note->getContent());
         $noteManager->persist($note);
         $noteManager->flush();
         $response = new JsonResponse(

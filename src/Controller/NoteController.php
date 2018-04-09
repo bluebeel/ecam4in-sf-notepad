@@ -39,6 +39,8 @@ class NoteController extends Controller
 
     /**
      * @Route("/", name="notes")
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request)
     {
