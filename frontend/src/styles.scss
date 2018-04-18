@@ -1,2 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+body {
+  padding-top: 54px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.category-form, .note-form, .category-table {
+  margin-top: 40px;
+}
+
+.note-header {
+  margin-top: 25px;
+}
+
+.note-btn {
+  margin-top: 10px;
+}
