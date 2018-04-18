@@ -2,10 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-
 import { AppComponent } from './app.component';
-import { MessageService } from './message.service';
 import { NotesComponent } from './notes/notes.component';
+
+import { MessageService } from './message.service';
+import {NoteService} from "./note.service";
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { NotesComponent } from './notes/notes.component';
     BrowserModule,
     HttpClientModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, NoteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

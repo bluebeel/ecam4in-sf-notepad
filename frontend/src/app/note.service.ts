@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable()
 export class NoteService {
 
-  private notesUrl = 'localhost:8000/api/note';  // URL to web api
+  private notesUrl = 'http://localhost:8000/api/note';  // URL to web api
 
   // Placeholder for notes
   notes: Note[] = [];

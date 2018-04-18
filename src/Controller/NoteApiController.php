@@ -57,6 +57,7 @@ class NoteApiController extends Controller
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         return $response;
     }
@@ -93,6 +94,7 @@ class NoteApiController extends Controller
             )
         );
         $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->setStatusCode(Response::HTTP_CREATED);
 
         return $response;
@@ -113,12 +115,14 @@ class NoteApiController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($note);
             $em->flush();
-            return new JsonResponse(
+            $response = new JsonResponse(
                 array(
                     'status' => 'DELETED',
                     'message' => 'This note has been deleted'
                 )
             );
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            return $response;
         }
         else {
             return new JsonResponse(
@@ -145,6 +149,7 @@ class NoteApiController extends Controller
             $data = $this->get('jms_serializer')->serialize($note, 'json');
             $response = new Response($data);
             $response->headers->set('Content-Type', 'application/json');
+            $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->setStatusCode(Response::HTTP_FOUND);
 
             return $response;
@@ -198,6 +203,7 @@ class NoteApiController extends Controller
                 )
             );
             $response->headers->set('Content-Type', 'application/json');
+            $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->setStatusCode(Response::HTTP_OK);
 
             return $response;
