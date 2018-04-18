@@ -7,16 +7,26 @@ import { NotesComponent } from './notes/notes.component';
 
 import { MessageService } from './message.service';
 import {NoteService} from "./note.service";
+import { AppRoutingModule } from './/app-routing.module';
+import { NoteComponent } from './note/note.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoriesNewComponent } from './categories-new/categories-new.component';
+import { CategoriesEditComponent } from './categories-edit/categories-edit.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotesComponent
+    NotesComponent,
+    NoteComponent,
+    CategoriesComponent,
+    CategoriesNewComponent,
+    CategoriesEditComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [MessageService, NoteService],
   bootstrap: [AppComponent]
