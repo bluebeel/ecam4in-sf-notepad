@@ -1,3 +1,13 @@
+<div class="container note-header">
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <h1>Notes list</h1>
+    </div>
+    <div class="col-6 col-md-4">
+      <a href="#" class="btn btn-primary btn-block note-btn" role="button">Add note</a>
+    </div>
+  </div>
+</div>
 <div class="card card-outline-secondary my-4" *ngFor="let note of notes">
   <div class="card-header">
     {{ note.title }}
@@ -5,9 +15,9 @@
   <div class="card-body">
     <h6 class="card-subtitle mb-2 text-muted">{{ note.category }}</h6>
     <p>{{ note.content }}</p>
-    <small class="text-muted">Posted on {{ note.date }}</small>
+    <small class="text-muted">Posted on {{ note.date | date:"dd/MM/yy" }}</small>
     <hr>
-    <a href="#" class="btn btn-primary">Edit note</a>
+    <a routerLink="/notes/{{note.id}}/edit" class="btn btn-primary">Edit note</a>
     <a href="#" class="btn btn-danger">Delete note</a>
   </div>
 </div>
