@@ -192,11 +192,11 @@ class NoteApiController extends Controller
         if ($note) {
             $note_request = $this->get('jms_serializer')->deserialize($content, Note::class, 'json');
             $note->setTitle($note_request->getTitle());
-            $note->setContent($note_request->getContent());
+            $note->setContentAPI($note_request->getContent());
             $note->setDate($note_request->getDate());
             $note->setCategory($note_request->getCategory());
             $noteManager->flush();
-            $response = new Response(
+            $response = new JsonResponse(
                 array(
                     'status' => 'UPDATED',
                     'message' => 'The note has been updated.'

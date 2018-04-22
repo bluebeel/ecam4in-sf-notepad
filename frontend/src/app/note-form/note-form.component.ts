@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NoteService } from '../note.service';
 import { CategoryService } from "../category.service";
@@ -18,7 +18,7 @@ export class NoteFormComponent implements OnInit {
   submitted = false;
   categories: Category[] = [];
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService, private location: Location) { }
+  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit() {
     this.getCategories();
@@ -40,10 +40,10 @@ export class NoteFormComponent implements OnInit {
 
 
   onSubmit() {
-    this.noteService.addNote(this.model)
+    this.noteService.updateNoteById(this.model.id, this.model)
       .subscribe(note => {
         this.submitted = true;
-        this.location.go("/");
+        this.router.navigate(["/"]);
       });
   }
 

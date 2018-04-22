@@ -38,6 +38,7 @@ class Note
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      * @Assert\Type("\DateTime")
+     * @Serializer\Type("DateTime<'Y-m-d'>")
      */
     private $date;
 
@@ -87,6 +88,14 @@ class Note
     public function setContent($content)
     {
         $this->content = "<content>" . $content . "</content>";
+    }
+
+    /**
+     * @param $content
+     */
+    public function setContentAPI($content)
+    {
+        $this->content = $content;
     }
 
     /**

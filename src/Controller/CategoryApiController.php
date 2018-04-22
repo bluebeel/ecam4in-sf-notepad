@@ -171,7 +171,7 @@ class CategoryApiController extends Controller
             $category_request = $this->get('jms_serializer')->deserialize($content, Category::class, 'json');
             $category->setLibelle($category_request->getLibelle());
             $categoryManager->flush();
-            $response = new Response(
+            $response = new JsonResponse(
                 array(
                     'status' => 'UPDATED',
                     'message' => 'The category has been updated.'
