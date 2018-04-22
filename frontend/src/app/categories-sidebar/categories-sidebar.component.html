@@ -1,0 +1,8 @@
+<h1 class="my-4">Category</h1>
+<a routerLink="/categories/new" class="btn btn-primary btn-block" role="button" aria-pressed="true">Add category</a>
+<br/>
+<div class="list-group">
+  <!-- routerLink="/notes/{{note.id}}/edit -->
+  <a routerLink="/" class="list-group-item">All</a>
+  <a *ngFor="let cat of categories" routerLink="/categories/{{cat.id}}" class="list-group-item">{{cat.libelle}}</a>
+</div>
