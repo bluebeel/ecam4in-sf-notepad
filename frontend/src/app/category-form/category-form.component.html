@@ -1,3 +1,11 @@
-<p>
-  category-form works!
-</p>
+<form name="form" #categoryForm="ngForm" (ngSubmit)="onSubmit()">
+  <div id="form">
+    <div class="form-group">
+      <label for="libelle" class="form-control-label required">Libelle</label>
+      <input type="text" id="libelle" name="form[libelle]" required="required" class="form-control" value="Write a libelle" [(ngModel)]="model.libelle"/>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn-secondary btn" [disabled]="!categoryForm.form.valid">{{submitBtn}}</button>
+    </div>
+  </div>
+</form>

@@ -26,7 +26,7 @@ export class CategoryFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.submitBtn = this.type === 'edit' ? 'Edit note' : 'Create note';
+    this.submitBtn = this.type === 'edit' ? 'Edit category' : 'Create category';
   }
 
   onSubmit() {
