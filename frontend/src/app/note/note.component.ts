@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { NoteService } from '../note.service';
@@ -16,7 +16,7 @@ export class NoteComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private noteService: NoteService,
-              private location: Location) { }
+              private router: Router) { }
 
   ngOnInit() {
     this.getNote();
@@ -26,6 +26,18 @@ export class NoteComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.noteService.getNoteById(id)
       .subscribe(note => this.note = note);
+  }
+
+  updateNote(): void {
+    console.log(this.note);
+    this.noteService.updateNoteById(this.note.id, this.note)
+      .subscribe(note => {
+        this.router.navigate(["/"]);
+      });
+  }
+
+  onSubmit(submitted: boolean) {
+    submitted ? this.updateNote() : null ;
   }
 
 }

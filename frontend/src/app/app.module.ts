@@ -15,6 +15,7 @@ import { CategoriesNewComponent } from './categories-new/categories-new.componen
 import { CategoriesEditComponent } from './categories-edit/categories-edit.component';
 import { NoteFormComponent } from './note-form/note-form.component';
 import {CategoryService} from "./category.service";
+import { NoteNewComponent } from './note-new/note-new.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {CategoryService} from "./category.service";
     CategoriesComponent,
     CategoriesNewComponent,
     CategoriesEditComponent,
-    NoteFormComponent
+    NoteFormComponent,
+    NoteNewComponent
   ],
   imports: [
     BrowserModule,

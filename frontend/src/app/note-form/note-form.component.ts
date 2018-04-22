@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NoteService } from '../note.service';
@@ -14,15 +14,27 @@ import { Note } from '../note';
 })
 export class NoteFormComponent implements OnInit {
 
-  model: Note = new Note();
-  submitted = false;
+  @Input('type') type: string;
+
+  private _model: Note;
+
+  @Input()
+  set model(model: Note) {
+    this._model = model || new Note();
+  }
+
+  get model(): Note { return this._model };
+
+  @Output() onSubmitted = new EventEmitter<boolean>();
+
   categories: Category[] = [];
+  submitBtn: string;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService, private router: Router) { }
 
   ngOnInit() {
+    this.submitBtn = this.type === 'edit' ? 'Edit note' : 'Create note';
     this.getCategories();
-    this.getNote();
   }
 
   getCategories(): void {
@@ -30,21 +42,9 @@ export class NoteFormComponent implements OnInit {
       .subscribe(categories => this.categories = categories);
   }
 
-  getNote(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.noteService.getNoteById(id)
-      .subscribe(note => {
-        this.model = note;
-      });
-  }
-
 
   onSubmit() {
-    this.noteService.updateNoteById(this.model.id, this.model)
-      .subscribe(note => {
-        this.submitted = true;
-        this.router.navigate(["/"]);
-      });
+    this.onSubmitted.emit(true);
   }
 
   // TODO: Remove this when we're done
