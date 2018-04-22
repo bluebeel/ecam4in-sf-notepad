@@ -26,4 +26,8 @@ export class NoteNewComponent implements OnInit {
         this.router.navigate(["/"]);
       });
   }
+
+  onSubmit(submitted: boolean) {
+    submitted ? this.addNote() : null ;
+  }
 }

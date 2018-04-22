@@ -6,9 +6,11 @@ import {NoteComponent} from "./note/note.component";
 import {CategoriesComponent} from "./categories/categories.component";
 import {CategoriesNewComponent} from "./categories-new/categories-new.component";
 import {CategoriesEditComponent} from "./categories-edit/categories-edit.component";
+import {NoteNewComponent} from "./note-new/note-new.component";
 
 const routes: Routes = [
   { path: '', component: NotesComponent },
+  { path: 'notes/new', component: NoteNewComponent },
   { path: 'notes/:id/edit', component: NoteComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'categories/new', component: CategoriesNewComponent },
