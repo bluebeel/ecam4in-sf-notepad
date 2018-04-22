@@ -17,6 +17,7 @@ import { NoteFormComponent } from './note-form/note-form.component';
 import {CategoryService} from "./category.service";
 import { NoteNewComponent } from './note-new/note-new.component';
 import { CategoriesSidebarComponent } from './categories-sidebar/categories-sidebar.component';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CategoriesSidebarComponent } from './categories-sidebar/categories-side
     CategoriesEditComponent,
     NoteFormComponent,
     NoteNewComponent,
-    CategoriesSidebarComponent
+    CategoriesSidebarComponent,
+    CategoryFormComponent
   ],
   imports: [
     BrowserModule,

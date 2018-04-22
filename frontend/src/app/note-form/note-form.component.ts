@@ -1,7 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
-import { NoteService } from '../note.service';
 import { CategoryService } from "../category.service";
 import { Category } from "../category";
 import { Note } from '../note';
@@ -30,7 +27,7 @@ export class NoteFormComponent implements OnInit {
   categories: Category[] = [];
   submitBtn: string;
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService, private router: Router) { }
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.submitBtn = this.type === 'edit' ? 'Edit note' : 'Create note';
