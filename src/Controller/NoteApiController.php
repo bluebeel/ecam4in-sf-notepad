@@ -150,7 +150,7 @@ class NoteApiController extends Controller
             $response = new Response($data);
             $response->headers->set('Content-Type', 'application/json');
             $response->headers->set('Access-Control-Allow-Origin', '*');
-            $response->setStatusCode(Response::HTTP_FOUND);
+            $response->setStatusCode(Response::HTTP_OK);
 
             return $response;
         }

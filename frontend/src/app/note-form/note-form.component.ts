@@ -11,7 +11,7 @@ import { Note } from '../note';
 })
 export class NoteFormComponent implements OnInit {
 
-  model: Note;
+  model: Note = new Note();
   submitted = false;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService) { }
