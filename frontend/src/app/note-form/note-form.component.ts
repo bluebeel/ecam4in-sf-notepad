@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { NoteService } from '../note.service';
 import { CategoryService } from "../category.service";
 import { Category } from "../category";
@@ -17,7 +18,7 @@ export class NoteFormComponent implements OnInit {
   submitted = false;
   categories: Category[] = [];
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService) { }
+  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService, private location: Location) { }
 
   ngOnInit() {
     this.getCategories();
@@ -38,7 +39,13 @@ export class NoteFormComponent implements OnInit {
   }
 
 
-  onSubmit() { this.submitted = true; }
+  onSubmit() {
+    this.noteService.addNote(this.model)
+      .subscribe(note => {
+        this.submitted = true;
+        this.location.go("/");
+      });
+  }
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.model); }
