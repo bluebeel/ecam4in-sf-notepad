@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoteService } from '../note.service';
+import { CategoryService } from "../category.service";
+import { Category } from "../category";
 import { Note } from '../note';
 
 
@@ -13,11 +15,18 @@ export class NoteFormComponent implements OnInit {
 
   model: Note = new Note();
   submitted = false;
+  categories: Category[] = [];
 
-  constructor(private route: ActivatedRoute, private noteService: NoteService) { }
+  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService) { }
 
   ngOnInit() {
+    this.getCategories();
     this.getNote();
+  }
+
+  getCategories(): void {
+    this.categoryService.getAllCategories()
+      .subscribe(categories => this.categories = categories);
   }
 
   getNote(): void {

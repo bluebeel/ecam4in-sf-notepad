@@ -83,10 +83,11 @@
       <input type="text" id="content" name="form[content]" required="required" class="form-control" [(ngModel)]="model.content"/>
     </div>
     <div class="form-group">
-      <label class="form-control-label required" for="form_category">Category</label>
-      <select id="form_category" name="form[category]" class="form-control">
-        <option value="1" selected="selected">Software</option>
-        <option value="2">Mangas</option></select></div>
+      <label class="form-control-label required" for="category">Category</label>
+      <select id="category" name="form[category]" class="form-control" required="required" [(ngModel)]="model.category">
+        <option *ngFor="let cat of categories" [value]="cat.id">{{cat.libelle}}</option>
+      </select>
+    </div>
     <div class="form-group">
       <button type="submit" id="form_save" name="form[save]" class="btn-secondary btn" [disabled]="!noteForm.form.valid">Edit Note</button>
     </div>
