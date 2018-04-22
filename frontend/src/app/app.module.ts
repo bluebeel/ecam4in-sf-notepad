@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms'
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,6 +13,7 @@ import { NoteComponent } from './note/note.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesNewComponent } from './categories-new/categories-new.component';
 import { CategoriesEditComponent } from './categories-edit/categories-edit.component';
+import { NoteFormComponent } from './note-form/note-form.component';
 
 
 @NgModule({
@@ -21,12 +23,14 @@ import { CategoriesEditComponent } from './categories-edit/categories-edit.compo
     NoteComponent,
     CategoriesComponent,
     CategoriesNewComponent,
-    CategoriesEditComponent
+    CategoriesEditComponent,
+    NoteFormComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [MessageService, NoteService],
   bootstrap: [AppComponent]
