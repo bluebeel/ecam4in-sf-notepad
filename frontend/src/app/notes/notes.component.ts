@@ -13,7 +13,7 @@ export class NotesComponent implements OnInit {
 
   notes: Note[];
 
-  constructor(private noteService: NoteService, private router: Router) { }
+  constructor(private noteService: NoteService) { }
 
   ngOnInit() {
     this.getNotes();

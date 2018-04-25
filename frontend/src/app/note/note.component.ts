@@ -29,7 +29,6 @@ export class NoteComponent implements OnInit {
   }
 
   updateNote(): void {
-    console.log(this.note);
     this.noteService.updateNoteById(this.note.id, this.note)
       .subscribe(note => {
         this.router.navigate(["/"]);

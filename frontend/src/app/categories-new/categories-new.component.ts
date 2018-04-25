@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Category} from "../category";
 import {CategoryService} from "../category.service";
+import {EventService} from "../event.service";
 
 @Component({
   selector: 'app-categories-new',
@@ -14,7 +15,8 @@ export class CategoriesNewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private categoryService: CategoryService,
-              private router: Router) { }
+              private router: Router,
+              private serviceInstance: EventService) { }
 
   ngOnInit() {
     this.category = new Category();
@@ -22,7 +24,8 @@ export class CategoriesNewComponent implements OnInit {
 
   addNote(): void {
     this.categoryService.addCategory(this.category)
-      .subscribe(note => {
+      .subscribe(_ => {
+        this.serviceInstance.sendEvent();
         this.router.navigate(["/"]);
       });
   }

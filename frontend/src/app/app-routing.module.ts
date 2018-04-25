@@ -7,6 +7,7 @@ import {CategoriesComponent} from "./categories/categories.component";
 import {CategoriesNewComponent} from "./categories-new/categories-new.component";
 import {CategoriesEditComponent} from "./categories-edit/categories-edit.component";
 import {NoteNewComponent} from "./note-new/note-new.component";
+import {CategoriesSidebarComponent} from "./categories-sidebar/categories-sidebar.component";
 
 const routes: Routes = [
   { path: '', component: NotesComponent },
@@ -14,7 +15,12 @@ const routes: Routes = [
   { path: 'notes/:id/edit', component: NoteComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'categories/new', component: CategoriesNewComponent },
-  { path: 'categories/:id/edit', component: CategoriesEditComponent }
+  { path: 'categories/:id/edit', component: CategoriesEditComponent },
+  {
+    path: "",
+    component: CategoriesSidebarComponent,
+    outlet: "sidebar"
+  }
 ];
 
 @NgModule({

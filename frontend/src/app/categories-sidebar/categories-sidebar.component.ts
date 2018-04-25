@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CategoryService} from "../category.service";
 import {Category} from "../category";
+import {EventService} from "../event.service";
 
 @Component({
   selector: 'app-categories-sidebar',
@@ -11,7 +12,11 @@ export class CategoriesSidebarComponent implements OnInit {
 
   categories: Category[] = [];
 
-  constructor(private categoryService: CategoryService,) { }
+  constructor(private categoryService: CategoryService, private serviceInstance: EventService) {
+    this.serviceInstance.$getEventSubject.subscribe(event => {
+      this.getCategories();
+    });
+  }
 
   ngOnInit() {
     this.getCategories();

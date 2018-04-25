@@ -1,3 +1,20 @@
-<p>
-  categories works!
-</p>
+<h1>Category list</h1>
+<table class="table category-table">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Libelle</th>
+    <th scope="col">Edit</th>
+    <th scope="col">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let category of categories; let i = index">
+    <th scope="row">{{i}}</th>
+    <td>{{ category.libelle }}</td>
+    <td><a href="/categories/{{ category.id }}/edit" class="btn btn-primary">Edit</a></td>
+    <td><button class="btn btn-danger" (click)="deleteCategory(category.id)">Delete</button></td>
+  </tr>
+  </tbody>
+</table>
+<br/>

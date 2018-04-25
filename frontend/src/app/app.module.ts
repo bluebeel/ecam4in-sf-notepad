@@ -8,7 +8,7 @@ import { NotesComponent } from './notes/notes.component';
 
 import { MessageService } from './message.service';
 import {NoteService} from "./note.service";
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { NoteComponent } from './note/note.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesNewComponent } from './categories-new/categories-new.component';
@@ -18,6 +18,7 @@ import {CategoryService} from "./category.service";
 import { NoteNewComponent } from './note-new/note-new.component';
 import { CategoriesSidebarComponent } from './categories-sidebar/categories-sidebar.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import {EventService} from "./event.service";
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { CategoryFormComponent } from './category-form/category-form.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [MessageService, NoteService, CategoryService],
+  providers: [MessageService, NoteService, CategoryService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
