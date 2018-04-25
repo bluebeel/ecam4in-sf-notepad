@@ -16,11 +16,7 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesComponent },
   { path: 'categories/new', component: CategoriesNewComponent },
   { path: 'categories/:id/edit', component: CategoriesEditComponent },
-  {
-    path: "",
-    component: CategoriesSidebarComponent,
-    outlet: "sidebar"
-  }
+  { path: 'categories/:id', component: NotesComponent },
 ];
 
 @NgModule({

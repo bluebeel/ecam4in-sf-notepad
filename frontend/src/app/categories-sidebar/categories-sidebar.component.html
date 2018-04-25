@@ -3,6 +3,7 @@
 <br/>
 <div class="list-group">
   <!-- routerLink="/notes/{{note.id}}/edit -->
-  <a routerLink="/" class="list-group-item">All</a>
-  <a *ngFor="let cat of categories" routerLink="/categories/{{cat.id}}" class="list-group-item">{{cat.libelle}}</a>
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+true}" class="list-group-item">All</a>
+  <a *ngFor="let cat of categories" routerLink="/categories/{{cat.id}}" routerLinkActive="active" class="list-group-item">{{cat.libelle}}</a>
 </div>

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { Location } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 

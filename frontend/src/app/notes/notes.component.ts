@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
-import {Router} from "@angular/router";
+import {ActivatedRoute, ParamMap} from "@angular/router";
+import {CategoryService} from "../category.service";
 
 @Component({
   selector: 'app-notes',
@@ -11,17 +14,27 @@ import {Router} from "@angular/router";
 })
 export class NotesComponent implements OnInit {
 
-  notes: Note[];
+  notes: Observable<Note[]>;
+  private id: number;
 
-  constructor(private noteService: NoteService) { }
+  constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.getNotes();
   }
 
   getNotes(): void {
-    this.noteService.getAllNotes()
-      .subscribe(notes => this.notes = notes);
+    this.notes = this.route.paramMap
+      .switchMap((params: ParamMap) => {
+        this.id = +params.get('id');
+        if (this.id) {
+          console.log(this.id);
+          return this.categoryService.getCategoryById(this.id).map((category) => {
+            return category.notes;
+          });
+        }
+        return this.noteService.getAllNotes();
+      });
   }
 
   deleteNote(id: number): void {
