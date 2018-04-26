@@ -32,7 +32,7 @@ class EntityHandler implements SubscribingHandlerInterface
 
         foreach (['json', 'xml', 'yml'] as $format) {
             $methods[] = [
-                'type' => 'Entity',
+                'type' => 'Integer',
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'format' => $format,
                 'method' => 'deserializeEntity',
@@ -75,6 +75,7 @@ class EntityHandler implements SubscribingHandlerInterface
         }
 
         $entityManager = $this->getEntityManager($entityClass);
+
         $primaryKeyValues = $entityManager->getClassMetadata($entityClass)->getIdentifierValues($entity);
         if (count($primaryKeyValues) > 1) {
             throw new InvalidArgumentException(
@@ -89,7 +90,7 @@ class EntityHandler implements SubscribingHandlerInterface
 
         $id = array_shift($primaryKeyValues);
         if (is_int($id) || is_string($id)) {
-            return $visitor->visitString($id, $type, $context);
+            return $entityManager->getRepository($entityClass)->find(intval($id));
         } else {
             throw new InvalidArgumentException(
                 sprintf(
@@ -115,7 +116,6 @@ class EntityHandler implements SubscribingHandlerInterface
         if (!(is_array($type) && isset($type['params']) && is_array($type['params']) && isset($type['params']['0']))) {
             return null;
         }
-
         $entityClass = $type['params'][0]['name'];
         $entityManager = $this->getEntityManager($entityClass);
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
 import { Observable } from 'rxjs/Observable';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
@@ -28,10 +29,7 @@ export class NotesComponent implements OnInit {
       .switchMap((params: ParamMap) => {
         this.id = +params.get('id');
         if (this.id) {
-          console.log(this.id);
-          return this.categoryService.getCategoryById(this.id).map((category) => {
-            return category.notes;
-          });
+          return this.noteService.getAllNotes().map(notes => notes.filter(note => note.category["id"] === this.id))
         }
         return this.noteService.getAllNotes();
       });
