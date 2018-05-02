@@ -16,6 +16,9 @@ use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\VisitorInterface;
 use JMS\Serializer\GraphNavigator;
 
+use Doctrine\ORM\Proxy\Proxy as ORMProxy;
+use Doctrine\Common\Persistence\Proxy;
+
 class EntityHandler implements SubscribingHandlerInterface
 {
     /**
@@ -32,7 +35,7 @@ class EntityHandler implements SubscribingHandlerInterface
 
         foreach (['json', 'xml', 'yml'] as $format) {
             $methods[] = [
-                'type' => 'Integer',
+                'type' => 'Entity',
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'format' => $format,
                 'method' => 'deserializeEntity',
@@ -73,9 +76,7 @@ class EntityHandler implements SubscribingHandlerInterface
                 sprintf("Entity class '%s' was expected, but '%s' got", $entityClass, get_class($entity))
             );
         }
-
         $entityManager = $this->getEntityManager($entityClass);
-
         $primaryKeyValues = $entityManager->getClassMetadata($entityClass)->getIdentifierValues($entity);
         if (count($primaryKeyValues) > 1) {
             throw new InvalidArgumentException(
@@ -87,10 +88,9 @@ class EntityHandler implements SubscribingHandlerInterface
                 sprintf("No primary keys found for entity '%s')", $entityClass)
             );
         }
-
         $id = array_shift($primaryKeyValues);
         if (is_int($id) || is_string($id)) {
-            return $entityManager->getRepository($entityClass)->find(intval($id));
+            return $visitor->visitString($id, $type, $context);
         } else {
             throw new InvalidArgumentException(
                 sprintf(

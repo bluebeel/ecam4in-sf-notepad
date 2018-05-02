@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
+import { zip } from 'rxjs/observable/zip';
 import { Observable } from 'rxjs/Observable';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {CategoryService} from "../category.service";
+import {Category} from "../category";
 
 @Component({
   selector: 'app-notes',
@@ -15,8 +16,9 @@ import {CategoryService} from "../category.service";
 })
 export class NotesComponent implements OnInit {
 
-  notes: Observable<Note[]>;
-  private id: number;
+  notes: Note[] = [];
+  categories: Category[] = [];
+  private id: string;
 
   constructor(private route: ActivatedRoute, private noteService: NoteService, private categoryService: CategoryService) { }
 
@@ -24,15 +26,25 @@ export class NotesComponent implements OnInit {
     this.getNotes();
   }
 
-  getNotes(): void {
-    this.notes = this.route.paramMap
-      .switchMap((params: ParamMap) => {
-        this.id = +params.get('id');
+  getNotes() {
+    zip(
+      this.route.paramMap
+        .switchMap((params: ParamMap) => {
+        this.id = params.get('id');
         if (this.id) {
-          return this.noteService.getAllNotes().map(notes => notes.filter(note => note.category["id"] === this.id))
+          return this.noteService.getAllNotes().map(notes => notes.filter(note => note.category === this.id));
+        } else {
+          return this.noteService.getAllNotes();
         }
-        return this.noteService.getAllNotes();
+      }),
+      this.categoryService.getAllCategories()
+    ).subscribe(([notes, categories]) => {
+      notes = notes.map((note) => {
+        note.category = categories.find((element) => String(element.id) === note.category);
+        return note;
       });
+      this.notes = notes;
+    });
   }
 
   deleteNote(id: number): void {

@@ -47,7 +47,7 @@ class NoteApiController extends Controller
     {
         $notes = $this->getDoctrine()
             ->getRepository(Note::class)
-            ->findAll();
+            ->findBy(array(), array('id' => 'desc'));
         $q = $request->query->get("q");
         if ($q) {
             $notes = $this->getTags($notes, $q);
