@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
-import { zip } from 'rxjs/observable/zip';
-import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 import { NoteService } from '../note.service';
 import { Note } from '../note';
 import {ActivatedRoute, ParamMap} from "@angular/router";
@@ -27,7 +26,7 @@ export class NotesComponent implements OnInit {
   }
 
   getNotes() {
-    zip(
+    combineLatest(
       this.route.paramMap
         .switchMap((params: ParamMap) => {
         this.id = params.get('id');

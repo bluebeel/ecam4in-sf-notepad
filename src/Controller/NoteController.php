@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 
 class NoteController extends Controller
 {
@@ -82,6 +83,7 @@ class NoteController extends Controller
             ->add('title', TextType::class)
             ->add('date', DateType::class)
             ->add('content', TextType::class)
+            ->add('add tag', ButtonType::class, array('label' => 'Add a tag'))
             ->add('category', EntityType::class, array(
                 'class' => Category::class,
                 'choice_label' => 'libelle'
@@ -124,6 +126,7 @@ class NoteController extends Controller
             ->add('title', TextType::class)
             ->add('date', DateType::class)
             ->add('content', TextType::class)
+            ->add('add tag', ButtonType::class, array('label' => 'Add a tag'))
             ->add('category', EntityType::class, array(
                 'class' => Category::class,
                 'choice_label' => 'libelle'
