@@ -10,7 +10,11 @@
     </fieldset>
     <div class="form-group">
       <label for="content" class="form-control-label required">Content</label>
-      <input type="text" id="content" name="form[content]" required="required" class="form-control" [(ngModel)]="model.content"/>
+      <input type="text" id="content" #content name="form[content]" required="required" class="form-control" [(ngModel)]="model.content"
+             (select)="onSelect(content.value.substring(content.selectionStart, content.selectionEnd))"/>
+    </div>
+    <div class="form-group">
+      <button class="btn-secondary btn" (click)="addTag($event)">Ajouter un tag</button>
     </div>
     <div class="form-group">
       <label class="form-control-label required" for="category">Category</label>

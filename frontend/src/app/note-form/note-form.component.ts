@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CategoryService } from "../category.service";
 import { Category } from "../category";
 import { Note } from '../note';
@@ -10,7 +10,7 @@ import { Note } from '../note';
   styleUrls: ['./note-form.component.scss']
 })
 export class NoteFormComponent implements OnInit {
-
+  @ViewChild('content') tag: ElementRef;
   @Input('type') type: string;
 
   private _model: Note;
@@ -26,6 +26,7 @@ export class NoteFormComponent implements OnInit {
 
   categories: Category[] = [];
   submitBtn: string;
+  selectedText: string;
 
   constructor(private categoryService: CategoryService) { }
 
@@ -39,12 +40,16 @@ export class NoteFormComponent implements OnInit {
       .subscribe(categories => this.categories = categories);
   }
 
-
   onSubmit() {
     this.onSubmitted.emit(true);
   }
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+  addTag(event) {
+    event.preventDefault();
+    this._model.content = this._model.content.replace(new RegExp(this.selectedText, 'gi'), `<tag>${this.selectedText}</tag>`);
+  }
 
+  onSelect(e) {
+    this.selectedText = e;
+  }
 }
