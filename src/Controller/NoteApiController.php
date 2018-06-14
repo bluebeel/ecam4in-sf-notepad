@@ -23,7 +23,6 @@ class NoteApiController extends Controller
     {
         $filtered = array_filter($notes, function ($u) use ($tag) {
             $xml = new \DOMDocument();
-            print_r($u->getContent());
             $xml->loadXML($u->getContent()); // Or load if filename required
             $xpath = new \DOMXpath($xml);
             $elements = $xpath->query("/content/tag");
@@ -58,7 +57,7 @@ class NoteApiController extends Controller
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
         $response->headers->set('Access-Control-Allow-Origin', '*');
-
+        $response->setStatusCode(Response::HTTP_OK);
         return $response;
     }
 

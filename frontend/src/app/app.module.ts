@@ -19,6 +19,7 @@ import { NoteNewComponent } from './note-new/note-new.component';
 import { CategoriesSidebarComponent } from './categories-sidebar/categories-sidebar.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 import {EventService} from "./event.service";
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {EventService} from "./event.service";
     NoteFormComponent,
     NoteNewComponent,
     CategoriesSidebarComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

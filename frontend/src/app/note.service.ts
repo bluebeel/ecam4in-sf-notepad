@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
@@ -75,8 +75,10 @@ export class NoteService {
   }
 
   // GET all the notes from the server
-  getAllNotes(): Observable<Note[]> {
-    return this.http.get<Note[]>(this.notesUrl)
+  getAllNotes(q?: string): Observable<Note[]> {
+    let params = new HttpParams();
+    if (q) params = params.append('q', q);
+    return this.http.get<Note[]>(this.notesUrl, {params: params})
       .pipe(
         tap(notes => this.log(`fetched notes`)),
         catchError(this.handleError('getAllNotes', []))
